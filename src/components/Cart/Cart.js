@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from "react-redux";
 import CartItem from "./CartItem";
-import {NavLink} from "react-router-dom";
+import {NavLink, withRouter} from "react-router-dom";
 import CartForm from "./CartForm";
 import {setOrderComplete} from "../../redux/orders-reducer";
+import {compose} from "redux";
 
 class Cart extends React.Component {
 
@@ -11,6 +12,9 @@ class Cart extends React.Component {
     this.props.setOrderComplete(false)
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
 
   render() {
 
@@ -65,8 +69,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapStateToDispatch = {
+const mapDispatchToProps = {
   setOrderComplete
 }
 
-export default connect(mapStateToProps, mapStateToDispatch)(Cart)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter
+)(Cart)
