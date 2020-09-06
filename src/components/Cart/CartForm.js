@@ -25,10 +25,9 @@ const CartForm = ({items, totalPrice, deliveryPrice}) => {
   const composeValidators = (...validators) => value =>
     validators.reduce((error, validator) => error || validator(value), undefined)
 
-
   return (
     <div className='cart-form'>
-      <Form onSubmit={onSubmit} initialValues={{deliveryType: '1'}}>
+      <Form onSubmit={onSubmit} initialValues={{deliveryType: '1', payType: '1'}}>
         {({handleSubmit, values}) => (
           <form onSubmit={handleSubmit}>
 
