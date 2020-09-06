@@ -1,31 +1,56 @@
-import React from 'react';
-import {NavLink} from "react-router-dom";
-import Busket from "../Busket/Busket";
-import {useSelector} from "react-redux";
+import React, {useState} from 'react';
+import {useDispatch} from "react-redux";
+import {addItemToCart} from "../../redux/cart-reducer";
 
-const Header = () => {
+function CatalogItem({image, id, sizes, title, prices}) {
 
-  const {totalCount, totalPrice} = useSelector(state => state.cart)
+  const onSelectSize = (prop, index) => {
+    setSelectSize(prop)
+    setPrice(prices[index])
+  }
+
+  let [selectSize, setSelectSize] = useState(sizes[0])
+  let [price, setPrice] = useState(prices[0])
+
+  const dispatch = useDispatch()
+
+  const onAddToCart = () => {
+    dispatch(addItemToCart({id, title, price, image, size: selectSize}))
+  }
 
   return (
-    <header>
-      <div className="header-container">
-        <div className="header-logo">
-          <NavLink to={'/'}>PIZZA TASK</NavLink>
+    <div className='catalog-item'>
+      <div className='catalog-item-img'>
+        <img src={image} alt=""/>
+      </div>
+      <div className="catalog-item-content">
+        <div className='catalog-item-title'>
+          {title}
         </div>
-        <div className="header-busket">
-          <NavLink className="header-busket-link" to={'/cart'}>
-            <span className='header-busket-count'>{totalCount > 0 && <span>{totalCount}</span>}</span>
-            <span className='header-busket-title'>
-              {totalCount ? `${totalPrice}$` : 'Корзина'}
-            </span>
-          </NavLink>
-          {totalCount > 0 &&  <Busket/>}
+        {sizes && <div className='catalog-item-params'>
+          {sizes.map((size, index) => {
+              return (
+                <div className={selectSize === size ? 'selected' : ''}
+                     onClick={() => onSelectSize(size, index)} key={size}>
+                  <span>{size} см.</span>
+                </div>
+              )
+            }
+          )}
+        </div>
+        }
+        <div className='catalog-item-bottom'>
+          <div className='catalog-item-price'>
+            {price}$
+          </div>
+          <div className='catalog-item-button'>
+            <button className='button' onClick={onAddToCart}>В корзину
+            </button>
+          </div>
         </div>
       </div>
-
-    </header>
+    </div>
   )
 }
 
-export default Header
+export default CatalogItem

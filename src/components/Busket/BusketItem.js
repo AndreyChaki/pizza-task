@@ -1,32 +1,6 @@
 import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {delItemFromCart, itemCountDecrease, itemCountIncrease} from "../../redux/cart-reducer";
-import {NavLink} from "react-router-dom";
-
-const Busket = () => {
-
-  const {items, totalPrice} = useSelector(state => state.cart)
-
-
-  return (
-    <div className="busket-block">
-      <div className="busket-block-title">
-        Ваш заказ
-      </div>
-      <div className="busket-block-list">
-        {items && items.map(item => <BusketItem key={`${item.id}_${item.size}`} {...item}/>)}
-      </div>
-      <div className="busket-block-bottom">
-        <div className="busket-block-total-price">
-          Итого: <span>{totalPrice}$</span>
-        </div>
-        <div className="busket-block-button">
-          <NavLink className='button' to={'/cart'}>Оформить</NavLink>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 const BusketItem = ({image, title, price, count, size, id}) => {
 
@@ -73,4 +47,4 @@ const BusketItem = ({image, title, price, count, size, id}) => {
   )
 }
 
-export default Busket
+export default BusketItem

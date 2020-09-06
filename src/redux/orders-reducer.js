@@ -1,90 +1,27 @@
+import {clearCart} from "./cart-reducer";
 
-const ADD_TO_CART = 'ADD_TO_CART'
-const DEL_ITEM_FROM_CART = 'DEL_ITEM_FROM_CART'
-const ITEM_COUNT_DECREASE = 'ITEM_COUNT_DECREASE'
-const ITEM_COUNT_INCREASE = 'ITEM_COUNT_INCREASE'
-
+const ADD_NEW_ORDER = 'orders/ADD_NEW_ORDER'
+const SET_ORDER_COMPLETE = 'orders/SET_ORDER_COMPLETE'
 
 let initialState = {
-  items: [],
-  totalPrice: 0,
-  totalCount: 0,
-  deliveryPrice: 10,
-  deliveryPriceThreshold: 120
+  orders: [],
+  orderComplete: false
 }
 
-const getTotalPrice = (arr) => arr.reduce((sum, item) => sum + (item.price * item.count) , 0);
-const getTotalCount = (arr) => arr.reduce((sum, item) => sum + item.count , 0);
-
-
-const cartReducer = (state = initialState, action) => {
+const ordersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TO_CART: {
 
-      let newItems = [...state.items]
-      let findKey = null;
-
-      for (let itemKey in newItems) {
-        let currentItem = newItems[itemKey];
-        if (currentItem.id === action.payload.id && currentItem.size === action.payload.size) {
-          findKey = itemKey;
-          break;
-        }
-      }
-
-      if (findKey !== null) {
-        newItems[findKey].count++;
-      } else {
-        newItems.push({...action.payload, count: 1})
-      }
-
+    case ADD_NEW_ORDER: {
       return {
         ...state,
-        items: newItems,
-        totalPrice: getTotalPrice(newItems),
-        totalCount: getTotalCount(newItems)
+        orders: [...state.orders, action.payload]
       }
     }
 
-    case DEL_ITEM_FROM_CART: {
-
-      let newItems = state.items.filter(item => {
-        return (item.id !== action.id) || (item.size !== action.size)
-      })
-
+    case SET_ORDER_COMPLETE: {
       return {
         ...state,
-        items: newItems,
-        totalPrice: getTotalPrice(newItems),
-        totalCount: getTotalCount(newItems)
-      }
-    }
-
-    case ITEM_COUNT_DECREASE: {
-
-      let newItems = state.items.map(item => {
-        return (item.id === action.id) && (item.size === action.size) ? {...item, count: --item.count } : item
-      })
-
-      return {
-        ...state,
-        items: newItems,
-        totalPrice: getTotalPrice(newItems),
-        totalCount: getTotalCount(newItems)
-      }
-    }
-
-    case ITEM_COUNT_INCREASE: {
-
-      let newItems = state.items.filter(item => {
-        return (item.id === action.id) && (item.size === action.size) ? {...item, count: ++item.count } : item
-      })
-
-      return {
-        ...state,
-        items: newItems,
-        totalPrice: getTotalPrice(newItems),
-        totalCount: getTotalCount(newItems)
+        orderComplete: action.param
       }
     }
 
@@ -93,24 +30,21 @@ const cartReducer = (state = initialState, action) => {
   }
 }
 
-export default cartReducer
+export default ordersReducer
 
-export const addItemToCart = (obj) => ({
-  type: ADD_TO_CART,
+const setNewOrder = (obj) => ({
+  type: ADD_NEW_ORDER,
   payload: obj,
 })
 
-export const delItemFromCart = (id, size) => ({
-  type: DEL_ITEM_FROM_CART,
-  id, size
+export const setOrderComplete = (param) => ({
+  type: SET_ORDER_COMPLETE,
+  param
 })
 
-export const itemCountDecrease = (id, size) => ({
-  type: ITEM_COUNT_DECREASE,
-  id, size
-})
 
-export const itemCountIncrease = (id, size) => ({
-  type: ITEM_COUNT_INCREASE,
-  id, size
-})
+export const addNewOrder = (obj) => (dispatch) => {
+  dispatch(setNewOrder(obj))
+  dispatch(clearCart())
+  dispatch(setOrderComplete(true))
+}
