@@ -139,6 +139,14 @@ h1 {
     }
   }
 
+  &-list
+  {
+    overflow-y: auto;
+    max-height: 330px;
+    margin-right: -20px;
+    padding-right: 20px;
+  }
+
   &-item {
     display: grid;
     grid-gap: 10px;
@@ -180,9 +188,29 @@ h1 {
     }
 
     &-img {
+      position: relative;
+      padding-bottom: 66.6666%;
+      z-index: 1;
+
+      &:after {
+        position: absolute;
+        content: '';
+        z-index: -1;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: url(./image/pizza.svg) 50% 50% no-repeat;
+        background-size: contain;
+        opacity: .3;
+      }
+
       img {
-        width: 100%;
         display: block;
+        width: 100%;
+        height: auto;
+        position: absolute;
+        object-fit: cover;
       }
     }
 
@@ -220,11 +248,29 @@ h1 {
 
   &-img {
     width: 100%;
+    position: relative;
+    padding-bottom: 66.6666%;
+    z-index: 1;
+
+    &:after {
+      position: absolute;
+      content: '';
+      z-index: -1;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: url(./image/pizza.svg) 50% 50% no-repeat;
+      background-size: contain;
+      opacity: .3;
+    }
 
     img {
       display: block;
       width: 100%;
       height: auto;
+      position: absolute;
+      object-fit: cover;
     }
   }
 
@@ -376,9 +422,29 @@ h1 {
   }
 
   &-img {
+    position: relative;
+
+    padding-bottom: 66.6666%;
+    z-index: 1;
+
+    &:after {
+      position: absolute;
+      content: '';
+      z-index: -1;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: url(./image/pizza.svg) 50% 50% no-repeat;
+      background-size: contain;
+      opacity: .5;
+    }
+
     img {
       width: 100%;
       display: block;
+      position: absolute;
+      object-fit: cover;
     }
   }
 
