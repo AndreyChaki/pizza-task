@@ -41,10 +41,10 @@ const CartItem = ({id, image, title, size, count, price}) => {
           <div onClick={onIncreaseCount} className='count-item-plus'/>
         </div>
       </div>
-      <div className='cart-item-price'>
+      <div className='cart-item-price cart-item-price_sum'>
         {price * count}$
       </div>
-      <div>
+      <div className='cart-item-del-wrap'>
         <div onClick={onDelFromCart} className='cart-item-del'/>
       </div>
 
