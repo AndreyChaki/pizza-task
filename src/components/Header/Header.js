@@ -8,7 +8,7 @@ const Header = () => {
   const {totalCount, totalPrice} = useSelector(state => state.cart)
 
   return (
-    <header>
+    <header className="header">
       <div className="header-container">
         <div className="header-logo">
           <NavLink to={'/'}>PIZZA TASK</NavLink>
