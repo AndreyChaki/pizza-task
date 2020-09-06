@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import CartItem from "./CartItem";
-import {NavLink, withRouter} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import CartForm from "./CartForm";
 import {setOrderComplete} from "../../redux/orders-reducer";
 import {compose} from "redux";
@@ -75,5 +75,4 @@ const mapDispatchToProps = {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withRouter
 )(Cart)
